@@ -1,0 +1,5 @@
+{
+  "ext": "css,scss,js,json,jsx,ts,tsx",
+  "ignore": ["*.test.js", "*.test.jsx", "*.test.ts", "*.test.tsx"],
+  "watch": ["dist", "nodemon.json", "test/server"]
+}
