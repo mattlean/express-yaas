@@ -1,4 +1,4 @@
-# express-yaba
+# express-yaas
 
 ## What is this?
-**express-yaba** is an [Express](https://expressjs.com) middleware that handles authentication. **YABA** stands for *yet another basic authentication*.
+**express-yaas** is an [Express](https://expressjs.com) middleware that handles authentication. **YAAS** stands for *yet another authenticated session*.
