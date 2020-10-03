@@ -1,7 +1,7 @@
 {
   "name": "express-yaas",
   "version": "0.0.1",
-  "description": "Express middleware that handles authentication",
+  "description": "Express middleware that handles authentication and sessions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -52,6 +52,7 @@
     "jest": "24.7.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
+    "pg-promise": "^8.7.5",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.3"
