@@ -2,59 +2,20 @@
   "name": "express-yaas",
   "version": "0.0.1",
   "description": "Express middleware that handles authentication and sessions",
+  "license": "MIT",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
   "scripts": {
-    "build": "tsc",
-    "build:watch": "nodemon --watch src --exec \"npm run build\"",
-    "format": "prettier --write --parser=typescript --print-width=120 --semi=false --single-quote \"{src,test}/**/*.{js,ts}\"",
-    "lint": "eslint --cache \"{src,test}/**/*.{js,ts}\"",
-    "start": "NODE_ENV=development node test/server",
-    "start:watch": "NODE_ENV=development nodemon test/server",
-    "start:prod": "NODE_ENV=production node test/server",
-    "start:prod:watch": "NODE_ENV=production nodemon test/server",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:update": "jest -u",
-    "test:watch": "jest --watch"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "peerDependencies": {},
+  "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IsaacLean/express-yaas.git"
+    "url": "git+https://github.com/mattlean/express-yaas.git"
   },
-  "author": "Matthew Lean <matt@mattlean.com> (http://mattlean.com)",
-  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/IsaacLean/express-yaas/issues"
+    "url": "https://github.com/mattlean/express-yaas/issues"
   },
-  "homepage": "https://github.com/IsaacLean/express-yaas#readme",
-  "peerDependencies": {
-    "@types/bcrypt": "^3.0.0",
-    "bcrypt": "^3.0.6"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.0",
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.8",
-    "@typescript-eslint/eslint-plugin": "^1.12.0",
-    "@typescript-eslint/parser": "^1.12.0",
-    "cookie-parser": "^1.4.4",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "13.2.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jest": "^22.11.1",
-    "eslint-plugin-prettier": "^3.1.0",
-    "express": "^4.17.1",
-    "jest": "24.7.1",
-    "morgan": "^1.9.1",
-    "nodemon": "^1.19.1",
-    "pg-promise": "^8.7.5",
-    "prettier": "^1.18.2",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.3"
-  }
+  "homepage": "https://github.com/mattlean/express-yaas#readme",
+  "author": "Matthew Lean <matt@mattlean.com> (http://mattlean.com)"
 }
