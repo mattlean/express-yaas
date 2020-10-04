@@ -1,0 +1,24 @@
+html
+  head
+    title Login
+  body
+    h1 Make a new account
+    form(
+      action="register"
+      method="POST"
+    )
+      label Username
+        input(name='username')
+      label Password
+        input(name='password')
+      button(type="submit") Register
+    h1 Login to an existing account
+    form(
+      action="login"
+      method="POST"
+    )
+      label Username
+        input(name='username')
+      label Password
+        input(name='password')
+      button(type="submit") Login
