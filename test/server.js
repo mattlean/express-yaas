@@ -15,25 +15,34 @@ const { yaasDB, yaasHash, yaasSesh } = yaas(db, {
 })
 const { checkIfAccountExists, register } = yaasDB
 const { hash, verifyHash } = yaasHash
-const { genSesh, verifySesh } = yaasSesh
+const { endSesh, startSesh, verifySesh } = yaasSesh
 
 app.use(morgan('dev'))
 app.use(cookieParser())
 
+/**
+ * Home page
+ */
 app.get('/', (req, res) => {
   res.render('index')
 })
 
+/**
+ * Page that shows login form
+ */
 app.get('/login', (req, res) => {
   res.render('login')
 })
 
+/**
+ * Endpoint that handles account login
+ */
 app.post(
   '/login',
   urlencodedParser,
   checkIfAccountExists,
   verifyHash,
-  genSesh,
+  startSesh,
   (req, res) => {
     if (res.locals.yaas.fails) {
       return res.render('login', { errMsg: res.locals.yaas.failMsgs[0] })
@@ -42,6 +51,13 @@ app.post(
     res.redirect('secret')
   }
 )
+
+/**
+ * Endpoint that handles account logout
+ */
+app.get('/logout', endSesh, (req, res) => {
+  res.redirect('/')
+})
 
 /**
  * Secret page which will only be viewable when
@@ -55,10 +71,16 @@ app.get('/secret', verifySesh, (req, res) => {
   res.render('login-success')
 })
 
+/**
+ * Page that shows registration form
+ */
 app.get('/register', (req, res) => {
   res.render('register')
 })
 
+/**
+ * Endpoint that handles account creation
+ */
 app.post('/register', urlencodedParser, hash, register, (req, res) => {
   // eslint-disable-next-line no-console
   console.log('New account created', res.locals.yaas.account)

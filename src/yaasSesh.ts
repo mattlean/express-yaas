@@ -26,7 +26,18 @@ const yaasSesh = (
     return `${val}|${hmac.digest('hex')}`
   }
 
-  const genSesh: Middleware = (req, res, next) => {
+  /**
+   * Middleware that ends session.
+   */
+  const endSesh: Middleware = (req, res, next) => {
+    res.cookie(seshParamKey, '')
+    next()
+  }
+
+  /**
+   * Middleware that starts session.
+   */
+  const startSesh: Middleware = (req, res, next) => {
     if (!res.locals.yaas) return next(new YAASErr('YAAS_001'))
 
     // YAAS encountered failure in a previous middleware,
@@ -69,7 +80,8 @@ const yaasSesh = (
 
   return {
     genCookieVal,
-    genSesh,
+    endSesh,
+    startSesh,
     verifyCookieVal,
     verifySesh,
   }

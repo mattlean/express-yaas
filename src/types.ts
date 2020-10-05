@@ -54,7 +54,8 @@ export interface YAASLocals {
 
 export interface YAASSeshObj {
   genCookieVal: (val: string) => string
-  genSesh: Middleware
+  endSesh: Middleware
+  startSesh: Middleware
   verifyCookieVal: (cookieVal: string) => boolean
   verifySesh: Middleware
 }
