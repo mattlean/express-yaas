@@ -30,12 +30,12 @@ app.post(
   verifyHash,
   (req, res) => {
     if (res.locals.yaas.fail) {
-      res.render('login', { errMsg: res.locals.yaas.failMsg })
-    } else {
-      res.render('login-success', {
-        username: res.locals.yaas.account.username,
-      })
+      return res.render('login', { errMsg: res.locals.yaas.failMsg })
     }
+
+    res.render('login-success', {
+      username: res.locals.yaas.account.username,
+    })
   }
 )
 
