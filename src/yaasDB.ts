@@ -1,10 +1,9 @@
-import { NextFunction, Request, Response } from 'express'
-import { ParamKeys, YAASDBObj } from './types'
+import { Middleware, ParamKeys, YAASDBObj } from './types'
 import { setYAASFail, setYAASLocals } from './locals'
 import YAASErr from './YAASErr'
 
 /**
- * Generate YAAS database middlewares
+ * Generate YAAS database middlewares.
  * @param db pg-promise database object
  * @param paramKeys Object that defines parameter key names to be used
  */
@@ -16,11 +15,7 @@ const yaasDB = (db: any, paramKeys: ParamKeys = {}): YAASDBObj => {
   /**
    * Middleware that checks if an account exists.
    */
-  const checkIfAccountExists = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): void => {
+  const checkIfAccountExists: Middleware = (req, res, next) => {
     findAccount(req.body, res.locals)
       .then((account) => {
         setYAASLocals(res.locals, acctParamKey, account)
@@ -88,7 +83,7 @@ const yaasDB = (db: any, paramKeys: ParamKeys = {}): YAASDBObj => {
   /**
    * Middleware that creates account.
    */
-  const register = (req: Request, res: Response, next: NextFunction): void => {
+  const register: Middleware = (req, res, next) => {
     createAccount(req.body, res.locals.yaas)
       .then((account) => {
         setYAASLocals(res.locals, acctParamKey, account)

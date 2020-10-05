@@ -1,7 +1,14 @@
 import { NextFunction, Request, Response } from 'express'
+import { TransformOptions } from 'stream'
 
-interface AcctData {
+export interface AcctData {
   [key: string]: string
+}
+
+export interface HmacData {
+  algorithm: string
+  key: any
+  options?: TransformOptions
 }
 
 export type Middleware = (
@@ -12,8 +19,10 @@ export type Middleware = (
 
 export interface ParamKeys {
   acct?: string
+  acctID?: string
   pass?: string
   result?: string
+  sesh?: string
   username?: string
 }
 
@@ -41,4 +50,11 @@ export interface YAASHashObj {
 
 export interface YAASLocals {
   [key: string]: string
+}
+
+export interface YAASSeshObj {
+  genCookieVal: (val: string) => string
+  genSesh: Middleware
+  verifyCookieVal: (cookieVal: string) => boolean
+  verifySesh: Middleware
 }

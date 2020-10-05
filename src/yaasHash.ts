@@ -1,12 +1,11 @@
 import { compare, genSalt, hash } from 'bcrypt'
-import { NextFunction, Request, Response } from 'express'
-import { ParamKeys, YAASHashObj } from './types'
+import { Middleware, ParamKeys, YAASHashObj } from './types'
 import { setYAASFail } from './locals'
 import { setYAASLocals } from './locals'
 import YAASErr from './YAASErr'
 
 /**
- * Generate YAAS hash middlewares
+ * Generate YAAS hash middlewares.
  * @param saltRounds Value for bcrypt salt rounds
  * @param paramKeys Object that defines parameter key names to be used
  */
@@ -19,7 +18,7 @@ const yaasHash = (saltRounds = 10, paramKeys: ParamKeys = {}): YAASHashObj => {
    * Middleware that creates hashed password.
    * Expects salt to be defined on the yaas property in response's locals object
    */
-  const fryHash = (req: Request, res: Response, next: NextFunction): void => {
+  const fryHash: Middleware = (req, res, next) => {
     if (!res.locals.yaas) return next(new YAASErr('YAAS_001'))
 
     if (!res.locals.yaas.salt) return next(new YAASErr('YAAS_002'))
@@ -35,7 +34,7 @@ const yaasHash = (saltRounds = 10, paramKeys: ParamKeys = {}): YAASHashObj => {
   /**
    * Middleware that creates salt for password hashing.
    */
-  const shakeSalt = (req: Request, res: Response, next: NextFunction): void => {
+  const shakeSalt: Middleware = (req, res, next) => {
     genSalt(saltRounds)
       .then((salt) => {
         setYAASLocals(res.locals, 'salt', salt)
@@ -47,16 +46,12 @@ const yaasHash = (saltRounds = 10, paramKeys: ParamKeys = {}): YAASHashObj => {
   /**
    * Middleware that verifies password with hash.
    */
-  const verifyHash = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): void => {
+  const verifyHash: Middleware = (req, res, next) => {
     if (!res.locals.yaas) return next(new YAASErr('YAAS_001'))
 
     // YAAS encountered failure in a previous middleware,
     // move onto next middleware
-    if (res.locals.yaas.fail || res.locals.yaas[acctParamKey] === null) {
+    if (res.locals.yaas.fails || res.locals.yaas[acctParamKey] === null) {
       return next()
     }
 

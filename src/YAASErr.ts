@@ -28,7 +28,11 @@ class YAASErr extends Error {
           this.message = 'Account data was not found'
           break
         case 'YAAS_006':
-          this.message = 'Cannot override "fail" key in YAAS locals object'
+          this.message =
+            'Cannot override "fails" or "failMsgs" keys in YAAS locals object'
+          break
+        case 'YAAS_007':
+          this.message = 'Account ID was not found on YAAS locals object'
       }
     }
   }
