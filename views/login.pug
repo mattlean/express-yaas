@@ -1,0 +1,16 @@
+html
+  head
+    title Login | express-yaas Demo
+  body
+    h1 Login to an existing account
+    p #{errMsg}
+    form(
+      action="login"
+      method="POST"
+    )
+      label Username
+        input(name='username')
+      label Password
+        input(name='password')
+      button(type="submit") Login
+    a(href='/') Home

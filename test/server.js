@@ -2,13 +2,16 @@ const cookieParser = require('cookie-parser')
 const express = require('express')
 const morgan = require('morgan')
 const { urlencoded } = require('body-parser')
-const yaas = require('../dist/main')
+const db = require('./db')
+const { yaas } = require('../dist/express-yaas')
 
 const app = express()
 app.set('view engine', 'pug')
 const urlencodedParser = urlencoded({ extended: false })
 
-const { hash, setYAASLocals, verifyHash } = yaas()
+const { yaasDB, yaasHash } = yaas(db)
+const { checkIfAccountExists, register } = yaasDB
+const { hash, verifyHash } = yaasHash
 app.use(morgan('dev'))
 app.use(cookieParser())
 
@@ -16,23 +19,34 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
+app.get('/login', (req, res) => {
+  res.render('login')
+})
+
 app.post(
   '/login',
   urlencodedParser,
-  (req, res, next) => {
-    setYAASLocals(res.locals, 'account', {
-      password: '$2b$10$BuN6k9v9EJRKbAgTZyNCweWCjQZVe.Et2l9AuG5Lf0TJIv3UmWMpG',
-    })
-    next()
-  },
+  checkIfAccountExists,
   verifyHash,
   (req, res) => {
-    res.send({ body: req.body, yaas: res.locals.yaas })
+    if (res.locals.yaas.fail) {
+      res.render('login', { errMsg: res.locals.yaas.failMsg })
+    } else {
+      res.render('login-success', {
+        username: res.locals.yaas.account.username,
+      })
+    }
   }
 )
 
-app.post('/register', urlencodedParser, hash, (req, res) => {
-  res.send({ body: req.body, yaas: res.locals.yaas })
+app.get('/register', (req, res) => {
+  res.render('register')
+})
+
+app.post('/register', urlencodedParser, hash, register, (req, res) => {
+  // eslint-disable-next-line no-console
+  console.log('New account created', res.locals.yaas.account)
+  res.render('register-success', { username: res.locals.yaas.account.username })
 })
 
 app.get('/visits', (req, res) => {

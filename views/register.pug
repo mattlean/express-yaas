@@ -1,0 +1,15 @@
+html
+  head
+    title Register | express-yaas Demo
+  body
+    h1 Make a new account
+    form(
+      action="register"
+      method="POST"
+    )
+      label Username
+        input(name='username')
+      label Password
+        input(name='password')
+      button(type="submit") Register
+    a(href='/') Home
